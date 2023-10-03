@@ -1,10 +1,75 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class CustomAppBarWidget extends StatelessWidget {
+import 'search_box_widget.dart';
+
+class CustomAppBarWidget extends StatelessWidget
+    implements PreferredSizeWidget {
   const CustomAppBarWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Stack(
+      children: [
+        Container(
+          height: 80,
+          clipBehavior: Clip.antiAlias,
+          decoration: const ShapeDecoration(
+            color: Color(0xFF33230E),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(25),
+                bottomRight: Radius.circular(25),
+              ),
+            ),
+          ),
+          child: Stack(
+            children: [
+              Positioned(
+                left: 13,
+                top: 24,
+                child: Container(
+                  width: 35,
+                  height: 35,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: const BoxDecoration(),
+                  child: SvgPicture.asset(
+                    'assets/icons/Menu.svg',
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 120,
+                top: 2,
+                child: SizedBox(
+                  child: Text(
+                    'Blog Expolarer',
+                    style: GoogleFonts.faustina(
+                      color: const Color(0xFFAB9476),
+                      fontSize: 32,
+                      fontWeight: FontWeight.w800,
+                      height: 0,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(
+          width: double.infinity,
+          height: 110,
+        ),
+        const Positioned(
+          left: 60,
+          bottom: 0,
+          child: SearchbarWidget(),
+        ),
+      ],
+    );
   }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(110);
 }
