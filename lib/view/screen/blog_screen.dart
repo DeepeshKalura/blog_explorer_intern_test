@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../controller/api/blogs_api_controller.dart';
 import '../widget/blog_container_widget.dart';
+import '../widget/custom_appbar_widget.dart';
 
 class BlogScreen extends StatefulWidget {
   const BlogScreen({super.key});
@@ -24,15 +25,15 @@ class _BlogScreenState extends State<BlogScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<APIController>(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Blog Screen'),
+    return SafeArea(
+      child: Scaffold(
+        appBar: const CustomAppBarWidget(),
+        body: controller.isLoading
+            ? getLoadingWidget()
+            : controller.errorMessage.isNotEmpty
+                ? getErrorWidget(controller.errorMessage)
+                : getBlogListWidget(controller.blogModel),
       ),
-      body: controller.isLoading
-          ? getLoadingWidget()
-          : controller.errorMessage.isNotEmpty
-              ? getErrorWidget(controller.errorMessage)
-              : getBlogListWidget(controller.blogModel),
     );
   }
 }
@@ -73,10 +74,41 @@ Widget getErrorWidget(String errorMessage) {
 }
 
 Widget getBlogListWidget(BlogModel blogModel) {
-  return ListView.builder(
-    itemBuilder: ((context, index) => BlogContainerWidget(
-          netWorkImage: blogModel.blogs![index].imageUrl!,
-        )),
-    itemCount: blogModel.blogs!.length,
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      Container(
+        padding: const EdgeInsets.only(
+          top: 21.0,
+          left: 47.0,
+          right: 16.0,
+        ),
+        child: const Text(
+          'Blogs',
+          style: TextStyle(
+            color: Color(0xFF593B15),
+            fontSize: 32,
+            fontFamily: 'Faustina',
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ),
+      Expanded(
+        child: Padding(
+          padding: const EdgeInsets.only(
+            top: 21.0,
+            left: 27.0,
+            right: 16.0,
+          ),
+          child: ListView.builder(
+            itemBuilder: ((context, index) => BlogContainerWidget(
+                  netWorkImage: blogModel.blogs![index].imageUrl!,
+                  title: blogModel.blogs![index].title!,
+                )),
+            itemCount: blogModel.blogs!.length,
+          ),
+        ),
+      ),
+    ],
   );
 }
