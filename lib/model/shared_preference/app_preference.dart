@@ -58,7 +58,6 @@ class AppPreference {
   }
 
   static void addFavoriteBlog(FavoriteBlog favoriteBlog) {
-    print("I get double tap addFavoriteBlog");
     final favoriteBlogs = getFavoriteBlogs();
     favoriteBlogs.add(favoriteBlog);
     final favoriteBlogsJson =

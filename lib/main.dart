@@ -1,3 +1,4 @@
+import 'package:blog_explorer/model/shared_preference/app_preference.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,6 +9,8 @@ import 'controller/routes/routes_controller.dart';
 import 'controller/routes/routes_name_controller.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  AppPreference.init();
   runApp(const MyApp());
 }
 

@@ -34,8 +34,9 @@ class _BlogScreenState extends State<BlogScreen> {
 
     if (isConnected) {
       await controller.fetchBlogs();
+    } else {
+      controller.fetchBlogsFromDatabase();
     }
-    controller.fetchBlogsFromDatabase();
   }
 
   void favoriteScreen() {

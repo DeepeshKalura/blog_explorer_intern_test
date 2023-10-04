@@ -37,11 +37,10 @@ class BlogContainerWidget extends StatelessWidget {
           'netWorkImage': netWorkImage,
         },
       ),
-      onDoubleTap: () async {
+      onDoubleTap: () {
         eventController.toggleLike();
-        await AppPreference.init();
+
         AppPreference.addFavoriteBlog(FavoriteBlog(blogId: id));
-        print("I got double tapped");
 
         Future<void>.delayed(const Duration(milliseconds: 500), () {
           eventController.toggleLike();
