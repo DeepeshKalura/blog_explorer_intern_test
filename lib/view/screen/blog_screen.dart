@@ -1,4 +1,4 @@
-import 'package:blog_explorer/model/blog_model/blog_model.dart';
+import 'package:blog_explorer/model/blog/blog_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
