@@ -7,10 +7,10 @@ class FavoriteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Blog Screen'),
+        title: const Text('Favorite Screen'),
       ),
       body: const Center(
-        child: Text('Blog Screen'),
+        child: Text('Favorite Screen'),
       ),
     );
   }
