@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../../model/blog/blog_model.dart';
+import '../../model/sqllite/db.dart';
 
 class APIController extends ChangeNotifier {
   static const baseUrl = 'https://intent-kit-16.hasura.app/api/rest/blogs';
@@ -17,6 +18,7 @@ class APIController extends ChangeNotifier {
 
   bool isLoading = true;
   String errorMessage = "";
+  final dbHelper = DatabaseHelper.instance;
 
   BlogModel blogModel = BlogModel(blogs: []);
 
@@ -32,6 +34,13 @@ class APIController extends ChangeNotifier {
     } catch (e) {
       errorMessage = e.toString();
     }
+    isLoading = false;
+    notifyListeners();
+  }
+
+  Future<void> fetchBlogsFromDatabase() async {
+    final blogs = await dbHelper.queryAllBlogs();
+    blogModel = BlogModel(blogs: blogs);
     isLoading = false;
     notifyListeners();
   }

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'controller/api/blogs_api_controller.dart';
 import 'controller/events/blog_screen_events_eontroller.dart';
+import 'controller/events/connectiviy_controller.dart';
 import 'controller/routes/routes_controller.dart';
 import 'controller/routes/routes_name_controller.dart';
 
@@ -22,6 +23,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => BlogScreenEventsController(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ConnectivityController(),
         ),
       ],
       child: MaterialApp(

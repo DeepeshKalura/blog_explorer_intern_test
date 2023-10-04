@@ -3,6 +3,8 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../blog/blog.dart';
+
 class DatabaseHelper {
   static const _databaseName = "blog_database.db";
   static const _databaseVersion = 1;
@@ -51,5 +53,13 @@ class DatabaseHelper {
   Future<List<Map<String, dynamic>>> queryAllRows() async {
     Database db = await instance.database;
     return await db.query(table);
+  }
+
+  Future<List<Blog>?> queryAllBlogs() async {
+    Database db = await instance.database;
+    List<Map<String, dynamic>> results = await db.query(table);
+    if (results.isEmpty) return null; // No data found
+    List<Blog> blogs = results.map((row) => Blog.fromMap(row)).toList();
+    return blogs;
   }
 }

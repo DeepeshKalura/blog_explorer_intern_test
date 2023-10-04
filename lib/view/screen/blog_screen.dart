@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../controller/api/blogs_api_controller.dart';
 import '../../controller/events/blog_screen_events_eontroller.dart';
+import '../../controller/events/connectiviy_controller.dart';
 import '../../controller/routes/routes_name_controller.dart';
 import '../widget/blog_container_widget.dart';
 import '../widget/custom_appbar_widget.dart';
@@ -20,9 +21,21 @@ class BlogScreen extends StatefulWidget {
 class _BlogScreenState extends State<BlogScreen> {
   @override
   void initState() {
-    final controller = Provider.of<APIController>(context, listen: false);
-    controller.fetchBlogs();
+    fetchData();
     super.initState();
+  }
+
+  void fetchData() async {
+    final controller = Provider.of<APIController>(context, listen: false);
+    final connectivityController =
+        Provider.of<ConnectivityController>(context, listen: false);
+
+    bool isConnected = await connectivityController.checkInternetConnectivity();
+
+    if (isConnected) {
+      await controller.fetchBlogs();
+    }
+    controller.fetchBlogsFromDatabase();
   }
 
   void favoriteScreen() {
