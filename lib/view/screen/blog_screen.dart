@@ -4,8 +4,11 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 import '../../controller/api/blogs_api_controller.dart';
+import '../../controller/events/blog_screen_events_eontroller.dart';
+import '../../controller/routes/routes_name_controller.dart';
 import '../widget/blog_container_widget.dart';
 import '../widget/custom_appbar_widget.dart';
+import '../widget/menu_widget.dart';
 
 class BlogScreen extends StatefulWidget {
   const BlogScreen({super.key});
@@ -22,12 +25,22 @@ class _BlogScreenState extends State<BlogScreen> {
     super.initState();
   }
 
+  void favoriteScreen() {
+    Navigator.of(context).pushNamed(RoutesNamesController.favoriteScreen);
+  }
+
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<APIController>(context);
+    final events = Provider.of<BlogScreenEventsController>(context);
     return SafeArea(
       child: Scaffold(
-        appBar: const CustomAppBarWidget(path: 'assets/icons/Menu.svg'),
+        key: events.scaffoldKey,
+        drawer: MenuWidget(onPressed: favoriteScreen),
+        appBar: CustomAppBarWidget(
+          path: 'assets/icons/Menu.svg',
+          onPressed: events.openDrawer,
+        ),
         body: controller.isLoading
             ? getLoadingWidget()
             : controller.errorMessage.isNotEmpty
