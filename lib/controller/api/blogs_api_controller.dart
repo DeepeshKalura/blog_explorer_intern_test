@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../../model/blog_model/blog_model.dart';
+import '../../model/blog/blog_model.dart';
 
 class APIController extends ChangeNotifier {
   static const baseUrl = 'https://intent-kit-16.hasura.app/api/rest/blogs';
