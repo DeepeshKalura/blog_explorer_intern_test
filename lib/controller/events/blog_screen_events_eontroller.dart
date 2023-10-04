@@ -6,4 +6,11 @@ class BlogScreenEventsController extends ChangeNotifier {
   void openDrawer() {
     scaffoldKey.currentState!.openDrawer();
   }
+
+  bool isLiked = false;
+
+  void toggleLike() {
+    isLiked = !isLiked;
+    notifyListeners();
+  }
 }

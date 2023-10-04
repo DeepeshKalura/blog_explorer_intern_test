@@ -117,6 +117,7 @@ Widget getBlogListWidget(BlogModel blogModel) {
             itemBuilder: ((context, index) => BlogContainerWidget(
                   netWorkImage: blogModel.blogs![index].imageUrl!,
                   title: blogModel.blogs![index].title!,
+                  id: blogModel.blogs![index].id!,
                 )),
             itemCount: blogModel.blogs!.length,
           ),

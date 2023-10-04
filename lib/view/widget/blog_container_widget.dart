@@ -1,19 +1,30 @@
+import 'package:blog_explorer/model/blog/favorite_blog.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:like_button/like_button.dart';
 
+import '../../controller/events/blog_screen_events_eontroller.dart';
 import '../../controller/routes/routes_name_controller.dart';
+import '../../model/shared_preference/app_preference.dart';
+// import 'animate_heart.dart';
 
 class BlogContainerWidget extends StatelessWidget {
-  const BlogContainerWidget(
-      {super.key, required this.netWorkImage, required this.title});
+  const BlogContainerWidget({
+    super.key,
+    required this.netWorkImage,
+    required this.title,
+    required this.id,
+  });
   final String netWorkImage;
   final String title;
+  final String id;
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    final eventController = Provider.of<BlogScreenEventsController>(context);
 
-    // Define responsive dimensions based on screen width
-    double containerWidth = screenWidth * 0.9; // 90% of the screen width
+    double containerWidth = screenWidth * 0.9;
     double containerHeight =
         containerWidth * 1.065; // Maintain the aspect ratio
 
@@ -26,6 +37,16 @@ class BlogContainerWidget extends StatelessWidget {
           'netWorkImage': netWorkImage,
         },
       ),
+      onDoubleTap: () async {
+        eventController.toggleLike();
+        await AppPreference.init();
+        AppPreference.addFavoriteBlog(FavoriteBlog(blogId: id));
+        print("I got double tapped");
+
+        Future<void>.delayed(const Duration(milliseconds: 500), () {
+          eventController.toggleLike();
+        });
+      },
       child: Padding(
         padding: const EdgeInsets.only(
           bottom: 36.0,
@@ -51,6 +72,15 @@ class BlogContainerWidget extends StatelessWidget {
                   ),
                 ),
               ),
+
+              // if (eventController.isLiked)
+              //   Positioned(
+              //     right: containerWidth * 0.1,
+              //     top: containerHeight * 0.1,
+              //     child: AnimatedHeart(
+              //       isLiked: eventController.isLiked,
+              //     ),
+              //   ),
               Positioned(
                 left: 0,
                 top: 0,
@@ -82,6 +112,17 @@ class BlogContainerWidget extends StatelessWidget {
                   ),
                 ),
               ),
+              if (eventController.isLiked)
+                Center(
+                  child: AnimatedOpacity(
+                    opacity: eventController.isLiked ? 1.0 : 0.0,
+                    duration: const Duration(milliseconds: 500),
+                    child: LikeButton(
+                      size: 150,
+                      isLiked: eventController.isLiked,
+                    ),
+                  ),
+                ),
               Positioned(
                 left: containerHeight * 0.12,
                 top: containerHeight * 0.78,
