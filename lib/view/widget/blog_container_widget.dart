@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../controller/routes/routes_name_controller.dart';
+
 class BlogContainerWidget extends StatelessWidget {
   const BlogContainerWidget(
       {super.key, required this.netWorkImage, required this.title});
@@ -15,70 +17,91 @@ class BlogContainerWidget extends StatelessWidget {
     double containerHeight =
         containerWidth * 1.065; // Maintain the aspect ratio
 
-    return Padding(
-      padding: const EdgeInsets.only(
-        bottom: 36.0,
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(
+        context,
+        RoutesNamesController.detailScreen,
+        arguments: {
+          'title': title,
+          'netWorkImage': netWorkImage,
+        },
       ),
-      child: SizedBox(
-        width: containerWidth,
-        height: containerHeight,
-        child: Stack(
-          children: [
-            Positioned(
-              left: 0,
-              top: 0,
-              child: Container(
-                width: containerWidth,
-                height: containerHeight,
-                decoration: ShapeDecoration(
-                  color: const Color(0xFFD9D9D9),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                      containerWidth * 0.1,
-                    ), // Responsive border radius
+      child: Padding(
+        padding: const EdgeInsets.only(
+          bottom: 36.0,
+        ),
+        child: SizedBox(
+          width: containerWidth,
+          height: containerHeight,
+          child: Stack(
+            children: [
+              Positioned(
+                left: 0,
+                top: 0,
+                child: Container(
+                  width: containerWidth,
+                  height: containerHeight,
+                  decoration: ShapeDecoration(
+                    color: const Color(0xFFD9D9D9),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        containerWidth * 0.1,
+                      ), // Responsive border radius
+                    ),
                   ),
                 ),
               ),
-            ),
-            Positioned(
-              left: 0,
-              top: 0,
-              child: Container(
-                width: containerWidth,
-                height:
-                    containerHeight * 0.76, // Adjust the height proportionally
-                decoration: ShapeDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(netWorkImage),
-                    fit: BoxFit.fill,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                      containerWidth * 0.1,
-                    ), // Responsive border radius
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              left: containerHeight * 0.12,
-              top: containerHeight * 0.78,
-              child: SizedBox(
-                width: containerWidth * 0.8,
-                height: containerHeight * 0.3,
-                child: Text(
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  title,
-                  style: GoogleFonts.faustina(
-                    color: const Color(0xFF593B15),
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
+              Positioned(
+                left: 0,
+                top: 0,
+                child: Hero(
+                  transitionOnUserGestures: true,
+                  placeholderBuilder: (context, heroSize, child) {
+                    return SizedBox(
+                      width: heroSize.width,
+                      height: heroSize.height,
+                      child: child,
+                    );
+                  },
+                  tag: title,
+                  child: Container(
+                    width: containerWidth,
+                    height: containerHeight *
+                        0.76, // Adjust the height proportionally
+                    decoration: ShapeDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(netWorkImage),
+                        fit: BoxFit.fill,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          containerWidth * 0.1,
+                        ), // Responsive border radius
+                      ),
+                    ),
                   ),
                 ),
               ),
-            )
-          ],
+              Positioned(
+                left: containerHeight * 0.12,
+                top: containerHeight * 0.78,
+                child: SizedBox(
+                  width: containerWidth * 0.8,
+                  height: containerHeight * 0.3,
+                  child: Text(
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    title,
+                    style: GoogleFonts.faustina(
+                      color: const Color(0xFF593B15),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

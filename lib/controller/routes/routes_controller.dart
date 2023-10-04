@@ -13,8 +13,12 @@ class RoutesController {
           builder: (_) => const BlogScreen(),
         );
       case RoutesNamesController.detailScreen:
+        final Map arguments = settings.arguments as Map;
         return MaterialPageRoute(
-          builder: (_) => const DetailScreen(),
+          builder: (_) => DetailScreen(
+            title: arguments['title'],
+            netWorkImage: arguments['netWorkImage'],
+          ),
         );
 
       case RoutesNamesController.favoriteScreen:

@@ -6,7 +6,10 @@ import 'search_box_widget.dart';
 
 class CustomAppBarWidget extends StatelessWidget
     implements PreferredSizeWidget {
-  const CustomAppBarWidget({super.key});
+  const CustomAppBarWidget({super.key, required this.path, this.onPressed});
+
+  final String path;
+  final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +32,17 @@ class CustomAppBarWidget extends StatelessWidget
               Positioned(
                 left: 13,
                 top: 24,
-                child: Container(
-                  width: 35,
-                  height: 35,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: const BoxDecoration(),
-                  child: SvgPicture.asset(
-                    'assets/icons/Menu.svg',
+                child: InkWell(
+                  onTap: onPressed,
+                  child: Container(
+                    width: 35,
+                    height: 35,
+                    clipBehavior: Clip.antiAlias,
+                    decoration: const BoxDecoration(),
+                    child: SvgPicture.asset(
+                      path,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
               ),

@@ -27,7 +27,7 @@ class _BlogScreenState extends State<BlogScreen> {
     final controller = Provider.of<APIController>(context);
     return SafeArea(
       child: Scaffold(
-        appBar: const CustomAppBarWidget(),
+        appBar: const CustomAppBarWidget(path: 'assets/icons/Menu.svg'),
         body: controller.isLoading
             ? getLoadingWidget()
             : controller.errorMessage.isNotEmpty

@@ -20,8 +20,11 @@ class MyApp extends StatelessWidget {
           create: (_) => APIController(),
         ),
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
         title: 'Blog Explorer',
+        theme: ThemeData(
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
         onGenerateRoute: RoutesController.onGenratingRoute,
         initialRoute: RoutesNamesController.blogScreen,
       ),
