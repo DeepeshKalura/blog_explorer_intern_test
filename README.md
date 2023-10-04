@@ -117,6 +117,7 @@ class RoutesController {
 ```
 
 ### Interactive Features
+![Menu Screen](./assets/app/menu_widget.png)
 ![Favorite Screen](./assets/app/fav_screen.png)
 - Users can mark a blog as a favorite..
 
